@@ -43,7 +43,7 @@
     <tr th:each="list : ${list}">
       <td class="mobile-hidden" th:text="${list.id}">1</td>
       <td>
-        <a th:text="${list.title}" th:href="@{/view(id=${list.id})}">제목입니다.</a>
+        <a th:text="${list.title}" th:href="@{/view(id=${list.id})}"></a>
       </td>
       <td class="mobile-hidden"><a th:text="${list.writer}" th:href="@{/view(id=${list.id})}">홍길동</a></td>
       <td class="mobile-hidden" th:text="${list.wdate}">2021.08.12</td>

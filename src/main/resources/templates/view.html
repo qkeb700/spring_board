@@ -6,8 +6,8 @@
 </head>
 <body>
     <h1 th:text="${spboard.title}">제목입니다.</h1>
-    <p>내용이 들어갈 부분입니다.</p>
-    <a href="@{${spboard.filepath}}">다운받기</a>
-    <a href="@{/spboard/modify/{id}(id = ${spboard.id})}">수정</a>
+    <p th:text="${spboard.content}">내용이 들어갈 부분입니다.</p>
+    <a th:href="@{${spboard.filepath}}">다운받기</a>
+    <a th:href="@{/modify/{id}(id = ${spboard.id})}">수정</a>
 </body>
 </html>
