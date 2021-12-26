@@ -28,4 +28,11 @@ public class BoardController {
         model.addAttribute("list", spBoardService.boardList());
         return "list";
     }
+
+    @GetMapping("/view") // localhost:8080/view?id=1
+    public String boardView(Model model, Integer id){
+        model.addAttribute("spboard", spBoardService.boardView(id));
+        return "view";
+    }
+
 }

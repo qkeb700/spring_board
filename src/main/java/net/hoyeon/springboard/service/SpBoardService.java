@@ -19,4 +19,9 @@ public class SpBoardService {
     public List<SpBoard> boardList(){
         return boardRepository.findAll();
     }
+
+    // 특정 게시글 불러오기
+    public SpBoard boardView(Integer id){
+        return boardRepository.findById(id).get();
+    }
 }
