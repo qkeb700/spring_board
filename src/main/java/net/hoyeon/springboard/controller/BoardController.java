@@ -16,13 +16,15 @@ public class BoardController {
     @Autowired
     private SpBoardService spBoardService;
 
-    @GetMapping("/write")
-    public String spBoardWrite(){return "write";}
+    @GetMapping("/board/write")
+    public String boardWriteForm(){return "boardwrite";}
 
-    @PostMapping("/write.DO")
-    public String spBoardWriteDo(SpBoard spBoard){
-        spBoardService.write(spBoard);
-        return "";
+    @PostMapping("/board/writepro")
+    public String boardWritePro(SpBoard spBoard, Model model, MultipartFile file) throws Exception{
+        spBoardService.write(spBoard, file);
+        model.addAttribute("message", "글 작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+        return "message";
     }
 
     @GetMapping("/list")
@@ -49,7 +51,7 @@ public class BoardController {
         spboardTemp.setTitle(spBoard.getTitle());
         spboardTemp.setContent(spBoard.getContent());
 
-        spBoardService.write(spboardTemp);
+        spBoardService.write(spboardTemp, file);
         return "redirect:/list";
     }
 }
