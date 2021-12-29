@@ -27,31 +27,31 @@ public class BoardController {
         return "message";
     }
 
-    @GetMapping("/list")
+    @GetMapping("/board/list")
     public String spBoardList(Model model){
         model.addAttribute("list", spBoardService.boardList());
-        return "list";
+        return "boardlist";
     }
 
-    @GetMapping("/view") // localhost:8080/view?id=1
+    @GetMapping("/baord/view") // localhost:8080/view?id=1
     public String boardView(Model model, Integer id){
         model.addAttribute("spboard", spBoardService.boardView(id));
-        return "view";
+        return "boardview";
     }
 
-    @GetMapping("/modify/{id}")
+    @GetMapping("/board/modify/{id}")
     public String spBoardModify(@PathVariable("id") Integer id, Model model){
         model.addAttribute("spboard", spBoardService.boardView(id));
-        return "modify";
+        return "boardmodify";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/board/update/{id}")
     public String spBoardUpdate(@PathVariable("id") Integer id, SpBoard spBoard, MultipartFile file) throws  Exception{
         SpBoard spboardTemp = spBoardService.boardView(id);
         spboardTemp.setTitle(spBoard.getTitle());
         spboardTemp.setContent(spBoard.getContent());
 
         spBoardService.write(spboardTemp, file);
-        return "redirect:/list";
+        return "redirect:/board/list";
     }
 }
