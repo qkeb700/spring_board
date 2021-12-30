@@ -33,7 +33,7 @@ public class BoardController {
     }
 
     @GetMapping("/board/list")
-    public String spBoardList(Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.DESC)Pageable pageable, String searchKeyword){
+    public String boardList(Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.DESC) Pageable pageable, String searchKeyword){
 
         Page<SpBoard> list = null;
 
@@ -55,15 +55,15 @@ public class BoardController {
         return "boardlist";
     }
 
-    @GetMapping("/baord/view") // localhost:8080/view?id=1
+    @GetMapping("/board/view") // localhost:8080/view?id=1
     public String boardView(Model model, Integer id){
-        model.addAttribute("spboard", spBoardService.boardView(id));
+        model.addAttribute("board", spBoardService.boardView(id));
         return "boardview";
     }
 
     @GetMapping("/board/modify/{id}")
     public String spBoardModify(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("spboard", spBoardService.boardView(id));
+        model.addAttribute("board", spBoardService.boardView(id));
         return "boardmodify";
     }
 
