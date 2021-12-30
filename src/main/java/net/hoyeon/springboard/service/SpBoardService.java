@@ -3,6 +3,8 @@ package net.hoyeon.springboard.service;
 import net.hoyeon.springboard.entity.SpBoard;
 import net.hoyeon.springboard.repository.SpBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,8 +29,13 @@ public class SpBoardService {
 
         boardRepository.save(spBoard);
     }
-    public List<SpBoard> boardList(){
-        return boardRepository.findAll();
+
+    // 게시글 리스트 처리
+    public Page<SpBoard> boardList(Pageable pageable){
+        return boardRepository.findAll(pageable);
+    }
+    public Page<SpBoard> boardSearchList(String searchKeyword, Pageable pageable){
+        return boardRepository.findByTitleContaining(searchKeyword, pageable);
     }
 
     // 특정 게시글 불러오기
