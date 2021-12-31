@@ -1,70 +1,50 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>게시글 리스트 페이지</title>
-  <!-- stylesheet -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
-  <link rel="stylesheet" href="/css/plugin/all.css">
-  <link rel="stylesheet" href="/css/plugin/animate.css">
-  <link rel="stylesheet" href="/css/plugin/bootstrap.css">
-  <link rel="stylesheet" href="/css/style.css">
-
-  <!-- script -->
-  <script src="/js/plugin/jquery-1.12.4.js"></script>
-  <script src="/js/plugin/popper.min.js"></script>
-  <script src="/js/plugin/bootstrap.js"></script>
-  <script src="/js/bbs.js"></script>
 </head>
+
+<style>
+
+    .layout {
+        width : 500px;
+        margin : 0 auto;
+        margin-top : 40px;
+    }
+
+</style>
+
 <body>
-<div class="container mb-5">
-  <h1 class="text-center my-4">
-    Hoyeon's 게시판
-  </h1>
-  <table class="table table-hover">
-    <colgroup class="mobile-hidden">
-      <col width="55">
-      <col>
-      <col width="120">
-      <col width="120">
-    </colgroup>
+
+<div class="layout">
+
+  <table>
     <thead>
     <tr>
-      <th class="mobile-hidden">번호</th>
-      <th class="mobile-hidden">제목</th>
-      <th class="mobile-hidden">글쓴이</th>
-      <th class="mobile-hidden">날짜</th>
+      <th>글번호</th>
+      <th>제목</th>
     </tr>
     </thead>
     <tbody>
-    <!-- loop -->
-    <tr th:each="list : ${list}">
-      <td class="mobile-hidden" th:text="${list.id}">1</td>
+    <tr th:each="board : ${list}">
+      <td th:text="${board.id}">1</td>
       <td>
-        <a th:text="${list.title}" th:href="@{/board/view(id=${list.id})}"></a>
+        <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a>
       </td>
-      <td class="mobile-hidden"><a th:text="${list.writer}" th:href="@{/board/view(id=${list.id})}">홍길동</a></td>
-      <td class="mobile-hidden" th:text="${list.wdate}">2021.08.12</td>
     </tr>
-    <!-- /loop -->
     </tbody>
   </table>
 
   <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
     <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
-    <strong th:if="${page == nowPage}" th:text="${page}" style="..."></strong>
+    <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
   </th:block>
   <form th:action="@{/board/list}" method="get">
     <input type="text" name="searchKeyword">
     <button type="submit">검색</button>
   </form>
-
-</div><!-- /.container -->
-
-<div class="loading">
-  <div class="spinner-border text-primary"></div>
 </div>
+
 </body>
 </html>

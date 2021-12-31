@@ -1,8 +1,7 @@
 package net.hoyeon.springboard.controller;
 
-import net.bytebuddy.TypeCache;
-import net.hoyeon.springboard.entity.SpBoard;
-import net.hoyeon.springboard.service.SpBoardService;
+import net.hoyeon.springboard.entity.Board;
+import net.hoyeon.springboard.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,14 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class BoardController {
 
     @Autowired
-    private SpBoardService spBoardService;
+    private BoardService boardService;
 
     @GetMapping("/board/write")
     public String boardWriteForm(){return "boardwrite";}
 
     @PostMapping("/board/writepro")
-    public String boardWritePro(SpBoard spBoard, Model model, MultipartFile file) throws Exception{
-        spBoardService.write(spBoard, file);
+    public String boardWritePro(Board board, Model model, MultipartFile file) throws Exception{
+        boardService.write(board, file);
         model.addAttribute("message", "글 작성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/board/list");
         return "message";
@@ -35,12 +34,12 @@ public class BoardController {
     @GetMapping("/board/list")
     public String boardList(Model model, @PageableDefault(page = 0, size = 10, sort="id", direction = Sort.Direction.DESC) Pageable pageable, String searchKeyword){
 
-        Page<SpBoard> list = null;
+        Page<Board> list = null;
 
         if(searchKeyword == null){
-            list = spBoardService.boardList(pageable);
+            list = boardService.boardList(pageable);
         } else{
-            list = spBoardService.boardSearchList(searchKeyword, pageable);
+            list = boardService.boardSearchList(searchKeyword, pageable);
         }
 
         int nowPage = list.getPageable().getPageNumber() + 1;
@@ -57,23 +56,23 @@ public class BoardController {
 
     @GetMapping("/board/view") // localhost:8080/view?id=1
     public String boardView(Model model, Integer id){
-        model.addAttribute("board", spBoardService.boardView(id));
+        model.addAttribute("board", boardService.boardView(id));
         return "boardview";
     }
 
     @GetMapping("/board/modify/{id}")
     public String spBoardModify(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("board", spBoardService.boardView(id));
+        model.addAttribute("board", boardService.boardView(id));
         return "boardmodify";
     }
 
     @PostMapping("/board/update/{id}")
-    public String spBoardUpdate(@PathVariable("id") Integer id, SpBoard spBoard, MultipartFile file) throws  Exception{
-        SpBoard spboardTemp = spBoardService.boardView(id);
+    public String boardUpdate(@PathVariable("id") Integer id, Board spBoard, MultipartFile file) throws  Exception{
+        Board spboardTemp = boardService.boardView(id);
         spboardTemp.setTitle(spBoard.getTitle());
         spboardTemp.setContent(spBoard.getContent());
 
-        spBoardService.write(spboardTemp, file);
+        boardService.write(spboardTemp, file);
         return "redirect:/board/list";
     }
 }

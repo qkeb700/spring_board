@@ -10,15 +10,12 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-public class SpBoard {
+public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String writer;
-    private String pwd;
     private String title;
     private String content;
     private String filename;
     private String filepath;
-    private String wdate = CurrentDate.curDate();
 }
